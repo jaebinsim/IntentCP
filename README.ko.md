@@ -30,18 +30,9 @@ HomeMCP는 **iOS 단축어(Shortcuts)** 에서 바로 쓸 수 있는 **음성 �
 - **🔗 URL-First**: 모든 제어는 표준화된 URL 스펙(`/tuya/{device}/{action}`)으로 동작합니다. 음성뿐 아니라 스크립트/자동화/대시보드에서도 같은 방식으로 호출하세요.
 - **🛠️ 확장에 열려있는 구조**: Tuya를 시작으로 Windows Agent, Matter, Zigbee 등 다양한 환경을 하나의 인터페이스로 통합하는 것을 지향합니다.
 
-## 🤔 왜 이름이 HomeMCP인가요?
-
-HomeMCP의 **MCP는 ‘Model Context Protocol’을 당장 전제로 한다는 의미가 아닙니다.**  
-이 프로젝트에서 MCP는 집(Home)의 다양한 제어 채널을 하나로 묶는 **Control Plane(오케스트레이션 레이어)** 을 뜻합니다.
-
-- 현재 HomeMCP는 **iOS 단축어 기반(iPhone-first)** 으로 설계되어, *별도의 AI 서버를 운영하지 않아도* 음성 기반 스마트홈 제어가 가능하도록 구현되어 있습니다.
-- 동시에 내부 구조는 **Android 등 타 모바일 플랫폼**, **웹 클라이언트**, 그리고 **표준 MCP(Model Context Protocol) 인터페이스**까지 확장할 수 있도록 열어두었습니다.
-- 즉, 지금의 핵심 가치는 **“No AI Hosting Required + iOS-native UX”** 이며,
-  프로젝트 이름은 장기적으로 지향하는 **“확장 가능한 Home Control Plane”** 을 반영합니다.
-
-> 정리하면, HomeMCP는 *지금은 가볍게 시작할 수 있는 iOS 중심 스마트홈 오케스트레이터*이면서,  
-> *미래에는 다양한 클라이언트와 표준 프로토콜을 수용할 수 있는 구조*를 목표로 합니다.
+## 🚀 The Vision: Home Master Control Plane
+HomeMCP는 단순한 브릿지가 아닙니다. 집안의 모든 기기/상태/씬(Scene)을 **LLM이 이해할 수 있는 맥락(Context)** 으로 통합하는
+**중앙 제어 평면(Control Plane)** 을 지향합니다.
 
 ---
 
