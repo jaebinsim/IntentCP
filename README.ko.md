@@ -1,24 +1,83 @@
-HomeMCP는 **Siri, Google Assistant 등 음성 기반 AI 어시스턴트를 통해 IoT 디바이스를 제어하기 위한 MCP(Multi Control Plane) 기반 스마트홈 오케스트레이션 시스템**입니다.
 
-본 프로젝트는 **특정 벤더의 음성 플랫폼에 종속되지 않는 범용 음성 인터페이스 기반 IoT 제어 인프라를 설계·검증하는 것**을 목표로 하며,  
-현재는 1차 단계로 **Siri와 Tuya 기반 IoT 디바이스를 연동한 구현**을 제공하고 있습니다.
+# HomeMCP
+
+> **AI를 운영하지 않아도 되는, iOS 단축어 기반 스마트홈 오케스트레이터**
+> 
+> *“복잡한 로컬 LLM/GPU 세팅 없이, 아이폰 하나로 자연어 음성 스마트홈을 시작하세요.”*
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![iOS Shortcuts](https://img.shields.io/badge/iOS-Shortcuts-FF4A00.svg?logo=shortcuts&logoColor=white)](https://support.apple.com/ko-kr/guide/shortcuts/welcome/ios)
+
+
+HomeMCP는 **iOS 단축어(Shortcuts)** 에서 바로 쓸 수 있는 **음성 기반 스마트홈 오케스트레이터**입니다.
+사용자가 별도의 AI(로컬 LLM/유료 모델 서버 등)를 직접 운영하지 않아도, **단축어에서 제공되는 Apple Intelligence(비공개 클라우드)** 와 **ChatGPT(계정 보유 시 선택)** 를 활용해
+자연어 명령을 **안전한 실행 포맷으로 변환**하고, 실제 제어 결과를 **짧고 친절한 한 줄 피드백**으로 돌려줍니다.
+
+또한 자연어 음성 명령을 **표준 URL 스펙**(`/tuya/{device}/{action}`)으로 변환해, **브라우저/스크립트/자동화 어디서든 같은 방식으로 실행**할 수 있게 설계했습니다.
+
+**TL;DR**
+- 📱 **iOS 단축어에서 바로 사용**: 별도 앱/모델 서버 없이 “시리야, 시그널”로 시작
+- 🤖 **AI 운영 불필요**: 로컬 LLM·GPU 없이 **단축어의 Apple AI(비공개 클라우드)** / **ChatGPT(선택)** 로 처리
+- 🎙️ *말로 하면* → **LLM #1**이 실행 URL 생성 → HomeMCP가 실제 디바이스 제어
+- 🔁 제어 결과(JSON) → **LLM #2**가 한 줄 응답 생성 → Siri가 TTS로 읽어줌
+- 🧩 Tuya-first지만, Windows Agent 등 **외부 제어 대상 확장(Action 매핑)** 을 전제로 설계
+
+## ✨ 왜 HomeMCP인가요?
+
+- **🚫 AI 운영 부담 Zero**: 비싼 GPU도, 복잡한 로컬 LLM 세팅도 필요 없습니다. 단축어의 **Apple Intelligence(비공개 클라우드)** 와 **ChatGPT(선택)** 를 그대로 활용합니다.
+- **🗣️ 진정한 자연어 제어**: “거실 불 켜줘” 같은 고정 커맨드가 아니라, “영화 보기 좋게 세팅해줘” 같은 표현도 **의도 기반으로 해석**합니다.
+- **🔗 URL-First**: 모든 제어는 표준화된 URL 스펙(`/tuya/{device}/{action}`)으로 동작합니다. 음성뿐 아니라 스크립트/자동화/대시보드에서도 같은 방식으로 호출하세요.
+- **🛠️ 확장에 열려있는 구조**: Tuya를 시작으로 Windows Agent, Matter, Zigbee 등 다양한 환경을 하나의 인터페이스로 통합하는 것을 지향합니다.
+
+## 🤔 왜 이름이 HomeMCP인가요?
+
+HomeMCP의 **MCP는 ‘Model Context Protocol’을 당장 전제로 한다는 의미가 아닙니다.**  
+이 프로젝트에서 MCP는 집(Home)의 다양한 제어 채널을 하나로 묶는 **Control Plane(오케스트레이션 레이어)** 을 뜻합니다.
+
+- 현재 HomeMCP는 **iOS 단축어 기반(iPhone-first)** 으로 설계되어, *별도의 AI 서버를 운영하지 않아도* 음성 기반 스마트홈 제어가 가능하도록 구현되어 있습니다.
+- 동시에 내부 구조는 **Android 등 타 모바일 플랫폼**, **웹 클라이언트**, 그리고 **표준 MCP(Model Context Protocol) 인터페이스**까지 확장할 수 있도록 열어두었습니다.
+- 즉, 지금의 핵심 가치는 **“No AI Hosting Required + iOS-native UX”** 이며,
+  프로젝트 이름은 장기적으로 지향하는 **“확장 가능한 Home Control Plane”** 을 반영합니다.
+
+> 정리하면, HomeMCP는 *지금은 가볍게 시작할 수 있는 iOS 중심 스마트홈 오케스트레이터*이면서,  
+> *미래에는 다양한 클라이언트와 표준 프로토콜을 수용할 수 있는 구조*를 목표로 합니다.
+
+---
+
+## Demo
+
+> (추가 예정) 20초 GIF/영상: “시리야, 시그널” → “영화 보기 좋게 세팅해줘” → 조명/기기 제어 + 음성 피드백
+
+- 예시 호출
+  ```bash
+  # 조명 ON
+  curl -X POST "http://localhost:8000/tuya/living_light/on"
+
+  # 상태 조회
+  curl -X GET "http://localhost:8000/tuya/living_light/status"
+
+  # 시퀀스
+  curl -X GET "http://localhost:8000/tuya/sequence?actions=living_light:on,subdesk_light:off%3Fdelay%3D5"
+  ```
 
 ---
 
 ## Key Features
 
-- 음성 기반 AI 어시스턴트 연동형 IoT 제어 구조
-- 2단계 LLM 처리 파이프라인
-  - LLM #1: 자연어 음성 명령 → 실행 URL 생성
-  - LLM #2: JSON 제어 결과 → 자연어 음성 응답 생성
-- 개인 서버 기반 MCP(HomeMCP) 아키텍처
-- Tuya Cloud 실 디바이스 제어 연동
-- iOS Shortcuts 기반 자동화 파이프라인
-- 음성 피드백(TTS) 기반 최종 사용자 응답
-- 프리셋(Scene), 상태 조회, 자동화 확장 구조 지원
-- 통합 GUI 기반 디바이스 · Scene · API 계정 관리 (계획)
-- GET / POST 겸용 디바이스 제어 API 제공 (LLM / 브라우저 / 스크립트 공용)
-- Tuya 외부 제어 대상(Windows Agent 등) 확장을 고려한 Action 매핑 구조
+- 📱 **iOS Shortcuts 중심 UX**: “앱 설치/대시보드”보다 **단축어 실행**을 배포·사용 단위로 설계
+- 🤖 **AI 운영 불필요 (No AI Hosting Required)**
+  - 로컬 LLM, 별도 모델 서버, GPU/VRAM 없이 사용
+  - **단축어의 Apple AI(비공개 클라우드)** + **ChatGPT(계정 보유 시 선택)** 조합 지원
+- 🧠 **2단계 LLM 파이프라인(제품 기능)**
+  - LLM #1: 자연어 명령 → **실행 URL 생성**(안전한 실행 포맷)
+  - LLM #2: 제어 결과 JSON → **한 줄 피드백 생성**(실패 이유/상태 포함)
+- 🔗 **URL 기반 제어 스펙**(GET/POST 공용): 음성/버튼/스크립트/스케줄러가 동일 실행 포맷 공유
+- ☁️ **Tuya Cloud 실 디바이스 제어 연동** (on/off, brightness, status, scene, sequence)
+- 🧩 **확장 가능한 Action 매핑 구조**: Tuya 외(Windows Agent 등) 제어 대상 확장 전제
+- 🖥️ 기본 **Web Panel** 제공(디바이스/설정 확인 및 테스트)
+- 🧰 **Monorepo 구성**: core 서버 / Shortcuts 배포 / (WIP) 프롬프트·스키마 오케스트레이션
+- 🗺️ 통합 GUI 기반 디바이스·Scene·계정 관리 (계획)
 
 ---
 
@@ -26,6 +85,15 @@ HomeMCP는 **Siri, Google Assistant 등 음성 기반 AI 어시스턴트를 통�
 
 AI Assistant(Siri) → iOS Shortcuts → LLM #1 → HomeMCP 서버 → (Tuya Cloud | Windows Agent) → 실제 디바이스  
 실제 디바이스 → (Tuya Cloud | Windows Agent) → HomeMCP 서버 → LLM #2 → iOS Shortcuts → AI Assistant(Siri)
+
+## Design Notes
+
+HomeMCP는 “스마트홈을 붙여 쓰는” 프로젝트가 아니라, **의도 해석(LLM) ↔ 실행(HomeMCP) ↔ 피드백(LLM/TTS)** 을 분리해 조합 가능한 형태로 만드는 것을 목표로 합니다.
+
+- **AI 운영 부담 제거**: 단축어에서 제공되는 Apple AI/ChatGPT를 활용해 *모델/서버 운영 없이* 음성 제어 경험 제공
+- **벤더 종속 최소화**: 음성 플랫폼에 붙는 로직은 Shortcuts에, 실행 로직은 서버에 분리
+- **자동화 친화적**: URL 스펙 하나로 음성/버튼/스크립트/스케줄러가 동일하게 동작
+- **확장 가능**: Tuya-first지만, 이후 Matter/Zigbee/로컬 에이전트로 확장 가능한 구조
 
 ---
 
@@ -67,7 +135,7 @@ HomeMCP의 궁극적인 목표는 다음과 같습니다.
 
 - 사용자는 단일 GUI 또는 CLI 환경에서
   - Tuya 계정 인증
-  - 디바이스 자동 등록
+  - 디바이스 자동 스캔 및 등록
   - 디바이스 별 호출 이름(alias) 지정
   - Scene(시나리오) 생성 및 관리
 - 위 설정을 기반으로
@@ -227,6 +295,7 @@ Examples:
 - HomeKit 포함 다중 플랫폼 하이브리드 제어
 - 모바일 웹 대시보드 및 통합 Web GUI
 - Google Assistant 등 타 음성 플랫폼 확장
+- (추후) **표준 MCP 프로토콜 인터페이스** 제공 옵션 (외부 Tool Host 연동)
 
 ---
 
@@ -255,17 +324,25 @@ HomeMCP는 단순한 서버 + 단축어 조합이 아니라,
 본 프로젝트는 단순한 스마트홈 자동화 구현이 아니라,
 
 - 음성 기반 AI 어시스턴트 중심의 IoT 제어 인프라 구조 설계
-- MCP(Multi Control Plane) 서버 기반 개인 제어 시스템 구축
+- 개인 서버 기반 **Home Control Plane** 구축 (실행 레이어/피드백 레이어 분리)
 - LLM 기반 자연어 제어 및 응답 파이프라인 검증
 - 특정 벤더에 종속되지 않는 확장형 음성 인터페이스 구조 실험
-
-을 주요 목표로 합니다.
 
 ---
 
 ## Quick Start (초기 사용 방법)
 
 > 아래 가이드는 **개발/테스트용 최소 셋업** 기준입니다. (배포/운영은 `Planned Extensions`의 Web GUI, 인증, 네트워크 보안 항목과 함께 별도 정리 예정)
+
+### 2분 체험 (최소 동작 확인)
+
+이미 Tuya Cloud 계정/디바이스가 준비되어 있다면, 아래 순서로 “일단 한 번” 동작을 확인할 수 있습니다.
+
+1) `settings.toml`에 Tuya Cloud 계정/리전(endpoint) 입력
+2) `devices.toml`에 최소 1개 디바이스 등록(별칭 포함)
+3) 서버 실행 후 `curl`로 on/status 호출
+
+> Siri/Shortcuts 연동은 그 다음 단계입니다.
 
 ### 0) 권장 환경
 
