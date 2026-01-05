@@ -219,9 +219,12 @@ def run_setup_wizard(
 
     console.print(
         "\n[bold green]Next steps[/bold green]\n"
-        "1) Run the server: [cyan]uvicorn home_mcp_core.app:app --reload[/cyan]\n"
-        "2) Open the Web Panel: [cyan]http://127.0.0.1:8000/panel/[/cyan]\n"
-        "   (If you run on a different host/port, adjust the URL accordingly.)\n"
-        "3) Install the Siri Shortcut and set your server URL\n"
-        "4) Try: [cyan]/tuya/<device>/status[/cyan] or [cyan]/tuya/<device>/on[/cyan]\n"
+        "1) Run the server (local only): [cyan]uvicorn home_mcp_core.app:app --reload[/cyan]\n"
+        "2) Or run the server for LAN access (recommended):\n"
+        "   [cyan]uvicorn home_mcp_core.app:app --reload --host 0.0.0.0 --port 8000[/cyan]\n"
+        "3) Open the Web Panel:\n"
+        "   - Local: [cyan]http://127.0.0.1:8000/panel/[/cyan]\n"
+        "   - LAN:   [cyan]http://<your-local-ip>:8000/panel/[/cyan]\n"
+        "4) Install the Siri Shortcut and set your server URL\n"
+        "5) Try: [cyan]/tuya/<device>/status[/cyan] or [cyan]/tuya/<device>/on[/cyan]\n"
     )
