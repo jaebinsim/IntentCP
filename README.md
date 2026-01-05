@@ -52,18 +52,17 @@ executed through iOS Shortcuts → HomeMCP → real devices.
 
 ### 🎥 Demo 1 — “Make the house feel cozy”
 
-**GIF (quick preview)**  
-![Make the house feel cozy – GIF](docs/images/demo-make-the-house-feel-cozy-record.gif)
+**GIF (quick preview)** ![Make the house feel cozy – GIF](docs/images/demo-make-the-house-feel-cozy-record.gif)
 
-**Video (full clip)**  
-👉 `docs/videos/demo-make-the-house-feel-cozy.mp4`
+**Video (full clip)** <video src="docs/videos/demo-make-the-house-feel-cozy.mp4" controls width="100%"></video>
 
 ---
 
 ### 🎥 Demo 2 — “I'm going to sleep”
 
-**Video (full clip)**  
-👉 `docs/videos/demo-im-going-to-sleep.mp4`
+**Video (full clip)** <video src="docs/videos/demo-im-going-to-sleep.mp4" controls width="100%"></video>
+
+---
 
 - Example calls
   ```bash
