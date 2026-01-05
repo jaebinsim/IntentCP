@@ -72,17 +72,39 @@ def _parse_sequence_actions(actions: str) -> list[_SeqStep]:
     return steps
 
 async def _run_after_delay(delay: int, fn, *args, **kwargs) -> None:
-    """Run a blocking function after delay seconds without blocking the event loop."""
-    if delay > 0:
-        await anyio.sleep(delay)
-    await anyio.to_thread.run_sync(fn, *args, **kwargs)
+    """Run a blocking function after delay seconds without blocking the event loop.
+    Any exception is caught and logged to avoid crashing background tasks.
+    """
+    try:
+        if delay > 0:
+            await anyio.sleep(delay)
+        await anyio.to_thread.run_sync(fn, *args, **kwargs)
+    except HTTPException as e:
+        # Unknown device or bad action should not crash background tasks
+        # Consider this a skipped/failed step
+        return
+    except Exception:
+        return
 
 def _execute_single_action_now(device_name: str, action: str) -> dict[str, Any]:
     """Execute a single action immediately and return a standard response payload."""
     action = action.strip().lower()
+    device_name = device_name.strip()
+
+    try:
+        info = _get_device_info(device_name)
+    except HTTPException as e:
+        if e.status_code == 404:
+            return {
+                "ok": False,
+                "skipped": True,
+                "reason": "unknown_device",
+                "device": device_name,
+                "action": action,
+            }
+        raise
 
     if action in ("on", "off"):
-        info = _get_device_info(device_name)
         if action == "on":
             device_id = _resolve_on_device_id(info)
             code = _command_code_on(info)
@@ -100,7 +122,6 @@ def _execute_single_action_now(device_name: str, action: str) -> dict[str, Any]:
         }
 
     if action == "status":
-        info = _get_device_info(device_name)
         device_id = _resolve_status_device_id(info)
         status = tuya_client.get_status(device_id)
         return {"ok": True, "device": device_name, "action": "status", "status": status}
