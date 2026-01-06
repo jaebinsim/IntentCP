@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IntentCP Panel</title>
+    <link rel="stylesheet" href="/static/panel.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">🏠</div>
+          <div class="brand__text">
+            <div class="brand__title">IntentCP</div>
+            <div class="brand__sub">Core Panel</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav__item nav__item--active" href="/panel/">Overview</a>
+          <a class="nav__item" href="/panel/devices">Devices</a>
+          <a class="nav__item" href="/panel/settings">Settings</a>
+          <a class="nav__item" href="/docs">API Docs</a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="kv"><span class="k">Settings</span><span class="v">{{ settings_path }}</span></div>
+          <div class="kv"><span class="k">Devices</span><span class="v">{{ devices_path }}</span></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <h1 class="h1">Overview</h1>
+            <div class="muted">Quick status and a tiny config peek.</div>
+          </div>
+          <div class="topbar__right">
+            <span class="badge" id="healthBadge">checking…</span>
+            <button id="themeToggle" type="button" class="btn small">🖥️ Auto</button>
+            <a class="btn" href="/health/" target="_blank" rel="noreferrer">Health</a>
+          </div>
+        </header>
+
+        <section class="grid">
+          <div class="card">
+            <div class="card__title">Devices</div>
+            <div class="card__value">{{ device_count }}</div>
+            <div class="muted">Logical devices registered</div>
+            <div style="margin-top:12px;">
+              <a class="btn primary" href="/panel/devices">Manage devices</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__title">Settings preview</div>
+            <pre class="pre">{{ settings_preview | tojson(indent=2) }}</pre>
+            <div class="muted">Secrets are masked in preview.</div>
+          </div>
+        </section>
+
+        <section class="grid" style="margin-top:14px;">
+          <div class="card">
+            <div class="card__title">Tips</div>
+            <ul class="list">
+              <li>Use <b>Devices</b> to bind your logical names to Tuya IDs.</li>
+              <li>Split fingerbots? Keep <code>..._on</code> / <code>..._off</code> as separate IDs (recommended).</li>
+              <li>Settings are saved as raw TOML to avoid “magic” edits.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card__title">Debug</div>
+            <div class="muted">If something looks blank, open these:</div>
+            <div class="chips">
+              <a class="chip" href="/panel/ping" target="_blank" rel="noreferrer">/panel/ping</a>
+              <a class="chip" href="/panel/debug" target="_blank" rel="noreferrer">/panel/debug</a>
+            </div>
+          </div>
+        </section>
+        <footer class="panel-footer">
+          <div class="panel-footer__left">
+            <span class="muted">IntentCP Panel</span>
+          </div>
+          <div class="panel-footer__right">
+            <span class="muted">Developed by</span>
+            <a class="link" href="https://github.com/jaebinsim" target="_blank" rel="noreferrer">simjaebin</a>
+            <span class="muted">·</span>
+            <a class="link" href="https://github.com/jaebinsim/IntentCP" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="/static/panel.js"></script>
+    <script>
+      // Page boot
+      if (window.IntentCP && window.IntentCP.bootOverview) {
+        window.IntentCP.bootOverview();
+      }
+
+      // Theme toggle: Auto -> Light -> Dark -> Auto
+      (function () {
+        const btn = document.getElementById('themeToggle');
+        if (!btn) return;
+
+        const STORAGE_KEY = 'homemcp_theme';
+
+        const getSystemTheme = () =>
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+
+        const apply = (mode) => {
+          if (mode === 'light' || mode === 'dark') {
+            document.documentElement.setAttribute('data-theme', mode);
+          } else {
+            document.documentElement.removeAttribute('data-theme');
+          }
+        };
+
+        const label = (mode) =>
+          mode === 'light' ? '🔆 Light'
+          : mode === 'dark' ? '🌙 Dark'
+          : '🖥️ Auto';
+
+        const load = () => localStorage.getItem(STORAGE_KEY) || 'auto';
+        const save = (mode) => localStorage.setItem(STORAGE_KEY, mode);
+
+        const cycle = (mode) =>
+          mode === 'auto' ? 'light'
+          : mode === 'light' ? 'dark'
+          : 'auto';
+
+        let mode = load();
+        apply(mode === 'auto' ? getSystemTheme() : mode);
+        btn.textContent = label(mode);
+
+        btn.addEventListener('click', () => {
+          mode = cycle(mode);
+          save(mode);
+          apply(mode === 'auto' ? getSystemTheme() : mode);
+          btn.textContent = label(mode);
+        });
+
+        // React to system theme changes when in Auto mode
+        if (window.matchMedia) {
+          const mq = window.matchMedia('(prefers-color-scheme: dark)');
+          mq.addEventListener('change', () => {
+            if (load() === 'auto') {
+              apply(getSystemTheme());
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

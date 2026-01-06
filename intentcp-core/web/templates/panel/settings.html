@@ -1,0 +1,77 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IntentCP Panel · Settings</title>
+    <link rel="stylesheet" href="/static/panel.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__logo">🏠</div>
+          <div class="brand__text">
+            <div class="brand__title">IntentCP</div>
+            <div class="brand__sub">Core Panel</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav__item" href="/panel/">Overview</a>
+          <a class="nav__item" href="/panel/devices">Devices</a>
+          <a class="nav__item nav__item--active" href="/panel/settings">Settings</a>
+          <a class="nav__item" href="/docs">API Docs</a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="kv"><span class="k">File</span><span class="v">{{ path }}</span></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <h1 class="h1">Settings</h1>
+            <div class="muted">Preview is masked. Editor saves raw TOML.</div>
+          </div>
+          <div class="topbar__right">
+            <button class="btn ghost" id="themeToggle" title="Toggle theme">
+              🖥️ Auto
+            </button>
+            <span class="badge" id="healthBadge">checking…</span>
+            <a class="btn" href="/panel/settings">Reload</a>
+          </div>
+        </header>
+
+        <section class="grid">
+          <div class="card">
+            <div class="card__title">Preview (masked)</div>
+            <pre class="pre">{{ preview | tojson(indent=2) }}</pre>
+          </div>
+
+          <div class="card">
+            <div class="card__title">Edit settings.toml</div>
+            <form method="post" action="/panel/settings" style="margin-top:12px;">
+              <textarea name="toml_text" class="textarea" spellcheck="false">{{ raw_toml }}</textarea>
+              <div class="row" style="margin-top:10px;">
+                <button class="btn primary" type="submit">Save</button>
+                <a class="btn" href="/panel/settings">Reload</a>
+              </div>
+              <p class="muted" style="margin-top:10px;">
+                Tip: do NOT commit <code>settings.toml</code>. Keep <code>settings.example.toml</code> in Git.
+              </p>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/panel.js"></script>
+    <script>
+      window.IntentCP && window.IntentCP.bootSettings && window.IntentCP.bootSettings();
+    </script>
+  </body>
+</html>
