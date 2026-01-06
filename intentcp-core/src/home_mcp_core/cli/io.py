@@ -7,15 +7,15 @@ import tomllib
 
 
 def _core_root() -> Path:
-    """Resolve the `home-mcp-core` package root directory.
+    """Resolve the `intentcp-core` package root directory.
 
     This file lives at:
-      home-mcp-core/src/home_mcp_core/cli/io.py
+      intentcp-core/src/home_mcp_core/cli/io.py
     So parents (Path.parents):
-      0=cli, 1=home_mcp_core, 2=src, 3=home-mcp-core
+      0=cli, 1=home_mcp_core, 2=src, 3=intentcp-core
 
     We store runtime config files in (spec):
-      home-mcp-core/config/
+      intentcp-core/config/
     """
 
     return Path(__file__).resolve().parents[3]

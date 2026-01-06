@@ -126,13 +126,13 @@ IntentCP/
   README.md                         # Project overview (EN)
   README.ko.md                      # Project overview (KO)
 
-  home-mcp-core/                    # Core server (FastAPI)
+  intentcp-core/                    # Core server (FastAPI)
     src/                            # Server implementation
     cli/                            # CLI for setup / operations
     pyproject.toml
     web/                            # Web panel (templates/static)
 
-  home-mcp-siri-shortcuts-signal/   # Siri Shortcut (Signal) distribution & docs
+  intentcp-shortcuts-signal/   # Siri Shortcut (Signal) distribution & docs
     README.md
     README.ko.md
     install/                        # iCloud link + setup checklist (KO/EN)
@@ -140,7 +140,7 @@ IntentCP/
     shortcuts/                      # Signal.shortcut + example
     scripts/                        # Export / validation helpers
 
-  home-mcp-llm-flows/               # Prompt orchestration (planned / WIP)
+  intentcp-llm-flows/               # Prompt orchestration (planned / WIP)
     # Schemas, generators, CLI/GUI (future)
 ```
 
@@ -165,7 +165,7 @@ From a single GUI or CLI, users will be able to:
 
 Based on this configuration, IntentCP automatically generates:
 
-- `home-mcp-core` server configuration
+- `intentcp-core` server configuration
 - LLM control & response prompts
 - Siri Shortcut distribution links
 
@@ -384,13 +384,13 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 ```
 
-### 4) Install `home-mcp-core`
+### 4) Install `intentcp-core`
 
-IntentCP is a monorepo, but **Python dependencies are currently managed in `home-mcp-core/pyproject.toml`**.  
-For the initial run, installing `home-mcp-core` is enough.
+IntentCP is a monorepo, but **Python dependencies are currently managed in `intentcp-core/pyproject.toml`**.  
+For the initial run, installing `intentcp-core` is enough.
 
 ```bash
-python -m pip install -e ./home-mcp-core
+python -m pip install -e ./intentcp-core
 ```
 
 ### 5) Configure via Wizard (no manual TOML editing)
@@ -404,8 +404,8 @@ homemcp init
 ```
 
 - Generated config files:
-  - `home-mcp-core/config/settings.toml`
-  - `home-mcp-core/config/devices.toml`
+  - `intentcp-core/config/settings.toml`
+  - `intentcp-core/config/devices.toml`
 
 ### 6) Run the server
 
@@ -443,7 +443,7 @@ curl -X GET "http://localhost:8000/tuya/sequence?actions=living_light:on,subdesk
 
 Follow the setup guide:
 
-- `home-mcp-siri-shortcuts-signal/install/setup-checklist.md` (EN) / `home-mcp-siri-shortcuts-signal/install/setup-checklist.ko.md` (KO)
+- `intentcp-shortcuts-signal/install/setup-checklist.md` (EN) / `intentcp-shortcuts-signal/install/setup-checklist.ko.md` (KO)
 
 > ⚠️ Prompt/flow auto-generation is still in the design stage.
 > For now, documentation focuses on the concept and how Shortcuts uses the prompts.
@@ -468,15 +468,15 @@ If you are setting up voice control for the first time, it is recommended
 to read them in order.
 
 - 📄 **Signal Shortcut Overview**
-  - [home-mcp-siri-shortcuts-signal/README.md](home-mcp-siri-shortcuts-signal/README.md)
+  - [intentcp-shortcuts-signal/README.md](intentcp-shortcuts-signal/README.md)
 
 - 🔗 **Install Signal Shortcut (iCloud Link)**
-  - [home-mcp-siri-shortcuts-signal/install/iCloud-link.md](home-mcp-siri-shortcuts-signal/install/iCloud-link.md)
+  - [intentcp-shortcuts-signal/install/iCloud-link.md](intentcp-shortcuts-signal/install/iCloud-link.md)
 
 - ✅ **Signal Setup Checklist**
-  - [home-mcp-siri-shortcuts-signal/install/setup-checklist.md](home-mcp-siri-shortcuts-signal/install/setup-checklist.md)
+  - [intentcp-shortcuts-signal/install/setup-checklist.md](intentcp-shortcuts-signal/install/setup-checklist.md)
 
 - 🧠 **LLM Prompt Usage Guide**
-  - [home-mcp-siri-shortcuts-signal/prompts/README.md](home-mcp-siri-shortcuts-signal/prompts/README.md)
+  - [intentcp-shortcuts-signal/prompts/README.md](intentcp-shortcuts-signal/prompts/README.md)
 
 ---

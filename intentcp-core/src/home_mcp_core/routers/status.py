@@ -7,7 +7,7 @@ router = APIRouter(prefix="/status", tags=["status"])
 
 @router.get("/")
 async def status_root():
-    return {"ok": True, "service": "home-mcp-core", "scope": "status"}
+    return {"ok": True, "service": "intentcp-core", "scope": "status"}
 
 
 @router.get("/tuya-test/{device_id}")

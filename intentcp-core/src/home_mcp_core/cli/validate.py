@@ -112,7 +112,7 @@ def validate_tuya_credentials(
         return (
             False,
             "Tuya SDK (tuya-iot-py-sdk) is not available in this environment. "
-            "Install dependencies from home-mcp-core (pip install -e ./home-mcp-core).\n\n"
+            "Install dependencies from intentcp-core (pip install -e ./intentcp-core).\n\n"
             f"Import error: {e}",
         )
 

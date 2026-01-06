@@ -12,15 +12,15 @@ from fastapi.templating import Jinja2Templates
 router = APIRouter(prefix="/panel", tags=["panel"])
 
 # Resolve paths robustly (independent of CWD)
-# .../home-mcp-core/src/home_mcp_core/routers/panel.py
-# parents[0]=routers, [1]=home_mcp_core, [2]=src, [3]=home-mcp-core
+# .../intentcp-core/src/home_mcp_core/routers/panel.py
+# parents[0]=routers, [1]=home_mcp_core, [2]=src, [3]=intentcp-core
 BASE_DIR = Path(__file__).resolve().parents[3]
 WEB_DIR = BASE_DIR / "web"
 TEMPLATES_DIR = WEB_DIR / "templates"
 
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
-# Config lives at repo root: home-mcp-core/config/*.toml
+# Config lives at repo root: intentcp-core/config/*.toml
 SETTINGS_FILE = BASE_DIR / "config" / "settings.toml"
 DEVICES_FILE = BASE_DIR / "config" / "devices.toml"
 

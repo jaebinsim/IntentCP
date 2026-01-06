@@ -16,7 +16,7 @@ def create_app() -> FastAPI:
     )
 
     # Static (Admin Panel assets)
-    base_dir = Path(__file__).resolve().parents[2]  # .../home-mcp-core
+    base_dir = Path(__file__).resolve().parents[2]  # .../intentcp-core
     static_dir = base_dir / "web" / "static"
     app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 

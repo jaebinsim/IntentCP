@@ -149,12 +149,12 @@ env.bak/
 venv.bak/
 
 # HomeMCP runtime config (secrets)
-home-mcp-core/config/settings.toml
-home-mcp-core/config/devices.toml
+intentcp-core/config/settings.toml
+intentcp-core/config/devices.toml
 
 # Example configs SHOULD be committed
-!home-mcp-core/config/settings.example.toml
-!home-mcp-core/config/devices.example.toml
+!intentcp-core/config/settings.example.toml
+!intentcp-core/config/devices.example.toml
 
 # Spyder project settings
 .spyderproject
@@ -196,7 +196,7 @@ cython_debug/
 # Visual Studio Code
 #  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#  and can be added to the global gitignore or merged into this file. However, if you prefer,
+#  and can be merged into this file. However, if you prefer,
 #  you could uncomment the following to ignore the entire vscode folder
 .vscode/
 

@@ -194,12 +194,12 @@ You may choose any of the following:
 
 ### 5-5) Prompt Management Policy
 
-This repository (`home-mcp-siri-shortcuts-signal`) contains the
+This repository (`intentcp-shortcuts-signal`) contains the
 **canonical prompt versions required for shortcut distribution and setup**.
 
 - General users: use the `prompts/` directory as-is
 - Prompt generation / expansion / orchestration:
-  - Managed in `home-mcp-llm-flows`
+  - Managed in `intentcp-llm-flows`
   - Final outputs should be **exported** into this repository
 
 ---

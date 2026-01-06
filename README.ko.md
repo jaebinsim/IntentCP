@@ -100,13 +100,13 @@ IntentCP/
   README.md                         # Project overview (EN)
   README.ko.md                      # Project overview (KO)
 
-  home-mcp-core/                    # Core server (FastAPI)
+  intentcp-core/                    # Core server (FastAPI)
     src/                            # Server implementation
     cli/                            # CLI for setup / operations
     pyproject.toml
     web/                            # Web panel (templates/static)
 
-  home-mcp-siri-shortcuts-signal/   # Siri Shortcut (Signal) distribution & docs
+  intentcp-shortcuts-signal/   # Siri Shortcut (Signal) distribution & docs
     README.md
     README.ko.md
     install/                        # iCloud link + setup checklist (KO/EN)
@@ -114,7 +114,7 @@ IntentCP/
     shortcuts/                      # Signal.shortcut + example
     scripts/                        # Export / validation helpers
 
-  home-mcp-llm-flows/               # Prompt orchestration (planned / WIP)
+  intentcp-llm-flows/               # Prompt orchestration (planned / WIP)
     # Schemas, generators, CLI/GUI (future)
 ```
 
@@ -134,9 +134,9 @@ IntentCP는 현재 **iOS Shortcuts-first**로 “AI 운영 없이” 음성 기�
   - 디바이스 별 호출 이름(alias) 지정
   - Scene(시나리오) 생성 및 관리
 - 위 설정을 기반으로
-  - `home-mcp-core` 서버 설정 파일 자동 생성
-  - `home-mcp-llm-flows`에서 LLM 프롬프트 자동 생성
-  - `home-mcp-siri-shortcuts-signal`에서 해당 프롬프트를 사용하는 단축어 링크 자동 생성
+  - `intentcp-core` 서버 설정 파일 자동 생성
+  - `intentcp-llm-flows`에서 LLM 프롬프트 자동 생성
+  - `intentcp-shortcuts-signal`에서 해당 프롬프트를 사용하는 단축어 링크 자동 생성
 
 즉, IntentCP는 **사용자 설정 → 서버 설정 → LLM 프롬프트 → 음성 단축어까지를 하나의 파이프라인으로 자동 구성하는 통합 오케스트레이션 시스템**을 지향합니다.
 
@@ -402,15 +402,15 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 ```
 
-### 4) Core 서버 설치 (`home-mcp-core`)
+### 4) Core 서버 설치 (`intentcp-core`)
 
 IntentCP는 Monorepo 구조이지만,  
-**현재 Python 의존성은 `home-mcp-core/pyproject.toml`에서 단일 관리**됩니다.
+**현재 Python 의존성은 `intentcp-core/pyproject.toml`에서 단일 관리**됩니다.
 
-초기 실행을 위해서는 `home-mcp-core`만 설치하면 됩니다.
+초기 실행을 위해서는 `intentcp-core`만 설치하면 됩니다.
 
 ```bash
-python -m pip install -e ./home-mcp-core
+python -m pip install -e ./intentcp-core
 ```
 
 ### 5) 설정은 Wizard로 끝 (TOML 직접 편집 불필요)
@@ -425,10 +425,10 @@ homemcp init
 ```
 
 - 생성되는 설정 파일 위치:
-  - `home-mcp-core/config/settings.toml`
-  - `home-mcp-core/config/devices.toml`
+  - `intentcp-core/config/settings.toml`
+  - `intentcp-core/config/devices.toml`
 
-### 6) 서버 실행 (Core: home-mcp-core)
+### 6) 서버 실행 (Core: intentcp-core)
 
 ```bash
 uvicorn home_mcp_core.app:app --reload --host 0.0.0.0 --port 8000
@@ -460,9 +460,9 @@ curl -X GET "http://localhost:8000/tuya/living_light/status"
 curl -X GET "http://localhost:8000/tuya/sequence?actions=living_light:on,subdesk_light:off?delay=5"
 ```
 
-### 9) Siri Shortcuts 연결 (Signal: home-mcp-siri-shortcuts-signal)
+### 9) Siri Shortcuts 연결 (Signal: intentcp-shortcuts-signal)
 
-1) `home-mcp-siri-shortcuts-signal/install/setup-checklist.ko.md`를 따라 단축어를 설치
+1) `intentcp-shortcuts-signal/install/setup-checklist.ko.md`를 따라 단축어를 설치
 2) 단축어 내부의 IntentCP 서버 주소를 내 서버 주소로 변경
 3) 음성으로 호출
 
@@ -471,9 +471,9 @@ curl -X GET "http://localhost:8000/tuya/sequence?actions=living_light:on,subdesk
 > ⚠️ 현재 LLM 프롬프트/플로우 자동 생성 기능은 구조 설계 단계이며,
 > 초기 버전에서는 개념 설명 위주로 제공됩니다. (CLI/GUI 기반 자동화는 추후 제공 예정)
 
-### 10) LLM 프롬프트/플로우 설정 (home-mcp-llm-flows)
+### 10) LLM 프롬프트/플로우 설정 (intentcp-llm-flows)
 
-`home-mcp-llm-flows`는
+`intentcp-llm-flows`는
 - LLM #1: 자연어 → 실행 URL 생성
 - LLM #2: JSON 결과 → 자연어 응답
 
@@ -496,15 +496,15 @@ IntentCP의 음성 제어 진입점인 **Siri Shortcuts (Signal)** 과 관련된
 실제 음성 제어를 사용하려면 아래 문서들을 순서대로 참고하는 것을 권장합니다.
 
 - 📄 **Signal 단축어 프로젝트 개요**
-  - [home-mcp-siri-shortcuts-signal/README.ko.md](home-mcp-siri-shortcuts-signal/README.ko.md)
+  - [intentcp-shortcuts-signal/README.ko.md](intentcp-shortcuts-signal/README.ko.md)
 
 - 🔗 **iCloud 단축어 설치 링크**
-  - [home-mcp-siri-shortcuts-signal/install/iCloud-link.ko.md](home-mcp-siri-shortcuts-signal/install/iCloud-link.ko.md)
+  - [intentcp-shortcuts-signal/install/iCloud-link.ko.md](intentcp-shortcuts-signal/install/iCloud-link.ko.md)
 
 - ✅ **단축어 설정 체크리스트 (필수)**
-  - [home-mcp-siri-shortcuts-signal/install/setup-checklist.ko.md](home-mcp-siri-shortcuts-signal/install/setup-checklist.ko.md)
+  - [intentcp-shortcuts-signal/install/setup-checklist.ko.md](intentcp-shortcuts-signal/install/setup-checklist.ko.md)
 
 - 🧠 **LLM 프롬프트 가이드**
-  - [home-mcp-siri-shortcuts-signal/prompts/README.ko.md](home-mcp-siri-shortcuts-signal/prompts/README.ko.md)
+  - [intentcp-shortcuts-signal/prompts/README.ko.md](intentcp-shortcuts-signal/prompts/README.ko.md)
 
 ---

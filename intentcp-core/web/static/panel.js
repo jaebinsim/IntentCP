@@ -192,7 +192,7 @@
     }
   };
 
-  window.HomeMCP = {
+  window.IntentCP = {
     bootOverview,
     bootSettings,
     bootDevices,

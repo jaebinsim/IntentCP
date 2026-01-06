@@ -7,8 +7,8 @@ from pydantic import BaseModel, AnyHttpUrl, Field, ConfigDict
 
 
 # Resolve paths robustly (independent of CWD)
-# .../home-mcp-core/src/home_mcp_core/config/settings.py
-# parents[0]=config, [1]=home_mcp_core, [2]=src, [3]=home-mcp-core
+# .../intentcp-core/src/home_mcp_core/config/settings.py
+# parents[0]=config, [1]=home_mcp_core, [2]=src, [3]=intentcp-core
 BASE_DIR = Path(__file__).resolve().parents[3]
 CONFIG_DIR = BASE_DIR / "config"
 

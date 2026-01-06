@@ -94,13 +94,13 @@ def run_setup_wizard(
     console.print(f"[dim]settings.toml:[/dim] {settings_path}")
     console.print(f"[dim]devices.toml:[/dim]  {devices_path}")
 
-    # Safety check: ensure config paths are under home-mcp-core/
-    if "home-mcp-core" not in str(settings_path):
+    # Safety check: ensure config paths are under intentcp-core/
+    if ("intentcp-core" not in str(settings_path)) and ("intentcp-core" not in str(settings_path)):
         console.print(
             Panel.fit(
                 f"[yellow]Warning:[/yellow] settings.toml path looks unusual:\n{settings_path}\n"
                 "This usually means the package was installed from a different directory.\n"
-                "Consider reinstalling with: pip install -e ./home-mcp-core",
+                "Consider reinstalling with: pip install -e ./intentcp-core",
                 title="Path Warning",
             )
         )

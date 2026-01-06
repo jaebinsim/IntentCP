@@ -78,11 +78,11 @@ Signal 단축어는 LLM 제공자를 고정하지 않습니다.
 
 ## 개발자 참고 사항
 
-이 저장소(`home-mcp-siri-shortcuts-signal`)는  
+이 저장소(`intentcp-shortcuts-signal`)는  
 **사용자가 직접 복사해 사용하는 최종 프롬프트(canonical output)** 를 관리합니다.
 
 - 프롬프트 생성 / 템플릿화 / 자동화는  
-  `home-mcp-llm-flows` 프로젝트에서 수행
+  `intentcp-llm-flows` 프로젝트에서 수행
 - 해당 프로젝트의 산출물을  
   이 저장소의 `prompts/`로 export 하는 방식을 권장합니다.
 

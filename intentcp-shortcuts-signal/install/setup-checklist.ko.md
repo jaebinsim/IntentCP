@@ -192,12 +192,12 @@ LLM 프롬프트 및 HTTP 요청 액션에는
 
 ### 5-5) 프롬프트 관리 기준
 
-이 저장소(`home-mcp-siri-shortcuts-signal`)는  
+이 저장소(`intentcp-shortcuts-signal`)는  
 **단축어 배포/설치에 필요한 프롬프트의 기준본(canonical)** 을 포함합니다.
 
 - 일반 사용자: 이 저장소의 `prompts/`를 그대로 사용
 - 프롬프트 자동 생성 / 확장 / 오케스트레이션:
-  - `home-mcp-llm-flows`에서 관리
+  - `intentcp-llm-flows`에서 관리
   - 최종 산출물을 이 저장소로 **export** 하는 방식 권장
 
 ---
