@@ -9,6 +9,20 @@ to executable **IntentCP server control requests (URLs)**.
 This repository focuses on **iOS Shortcut distribution and user configuration**
 within the IntentCP ecosystem.
 
+iOS Shortcuts were chosen intentionally as the **thinnest possible entry point**
+into the system.
+
+They allow IntentCP to reuse the phone’s **native voice UX** and **built-in AI capabilities**
+without requiring users to install a separate app or run background services.
+
+In practice, this means the shortcut can leverage:
+- **On-device Apple AI** (where available)
+- **Apple Intelligence private cloud inference**
+- Optional third-party models (such as ChatGPT), if configured by the user
+
+All AI processing stays on the *mobile side* for intent interpretation,
+while the IntentCP server remains a lightweight, deterministic execution layer.
+
 ---
 
 ## What does this repository provide?
